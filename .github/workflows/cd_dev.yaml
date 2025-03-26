@@ -10,6 +10,7 @@ jobs:
     - run: |
         echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
         echo "${{ secrets.KNOWN_HOSTS }}" &> ~/.ssh/known_hosts
+        mkdir .ssh
         ssh -i ~/ssh_key root@3.110.114.166
         cd Turbo-Deployment/ && git pull
         pnpm install
