@@ -5,7 +5,7 @@ on:
 
 jobs:
  redeploy:
-   runs: ubuntu-latest
+   runs-on: ubuntu-latest
    steps: 
     - run: |
         echo ${{ secrets.SSH_PRIVATE_KEY }} &> ~/ssh_key
