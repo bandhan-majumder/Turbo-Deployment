@@ -1,16 +1,14 @@
 name: Deploy on dev
 on:
  push:
-  branches:
-   - "main"
+  branches: [ main ]
 
 jobs:
  uses: ubuntu-latest
  redeploy:
-   name: Deploying everything to the dev cluster
+   runs-on: Deploying everything to the dev cluster
 
    steps: 
-    - name: SSH into server
     - run: |
         echo ${{ secrets.SSH_PRIVATE_KEY }} &> ~/ssh_key
         ssh -i ~/ssh_key root@3.110.114.166
