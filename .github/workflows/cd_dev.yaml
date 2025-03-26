@@ -1,0 +1,21 @@
+name: Deploy on dev
+on:
+ push:
+  branches:
+   - "main"
+
+jobs:
+ redeploy:
+   name: Deploying everything to the dev cluster
+
+   steps: 
+    - name: SSH into server
+    - run: |
+        echo ${{ secrets.SSH_PRIVATE_KEY }} &> ~/ssh_key
+        ssh -i ~/ssh_key root@3.110.114.166
+        cd Turbo-Deployment/ && git pull
+        pnpm install
+        pnpm run build
+        pm2 restart http-server
+        pm2 restart ws-server
+        pm2 restart web
