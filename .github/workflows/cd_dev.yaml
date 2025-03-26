@@ -4,10 +4,8 @@ on:
   branches: [ main ]
 
 jobs:
- uses: ubuntu-latest
  redeploy:
-   runs-on: Deploying everything to the dev cluster
-
+   runs: ubuntu-latest
    steps: 
     - run: |
         echo ${{ secrets.SSH_PRIVATE_KEY }} &> ~/ssh_key
