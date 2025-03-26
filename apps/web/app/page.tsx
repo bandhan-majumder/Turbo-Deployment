@@ -4,9 +4,8 @@ export default async function Home() {
   const user = await client.user.findFirst();
   return (
     <div>
-      {user?.id}
+      First name: 
       {user?.username}
-      {user?.password}
     </div>
   );
 }
