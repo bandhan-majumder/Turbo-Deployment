@@ -4,8 +4,10 @@ export default async function Home() {
   const user = await client.user.findFirst();
   return (
     <div>
+      Welcome to the app!
+      <br />
       First name: 
-      {user?.username}
+      {user?.username || "No user found"}
     </div>
   );
 }
