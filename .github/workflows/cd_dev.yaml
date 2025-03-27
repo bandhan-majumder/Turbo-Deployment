@@ -14,5 +14,6 @@ jobs:
         echo "previous step"
         echo "${{ secrets.KNOWN_HOSTS }}" &> ~/.ssh/known_hosts
         echo "next step"
+        ls -la ~/.ssh/
         chmod 700 /home/runner/ssh_key
         ssh -i ~/ssh_key root@3.110.114.166 -t "cd Turbo-Deployment/ && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
