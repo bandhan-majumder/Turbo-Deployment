@@ -23,4 +23,4 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh ubuntu@43.204.96.37 "cd Turbo-Deployment/ && git pull && npm install -g pnpm && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
+        ssh ubuntu@43.204.96.37 -t "cd Turbo-Deployment/ && git pull origin main && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
