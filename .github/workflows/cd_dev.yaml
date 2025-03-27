@@ -19,8 +19,8 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Add EC2 host to known hosts
-      run: ssh-keyscan -H {43.204.96.37}>> ~/.ssh/known_hosts
+      run: ssh-keyscan -H 43.204.96.37 >> ~/.ssh/known_hosts
 
     - name: Deploy to EC2
       run: |
-        ssh ubuntu@{43.204.96.37} "cd Turbo-Deployment/ && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
+        ssh ubuntu@43.204.96.37 "cd Turbo-Deployment/ && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
