@@ -1,19 +1,26 @@
-name: Deploy on dev
+name: Deploy to Dev Environment
+
 on:
- push:
-  branches: [ main ]
+  push:
+    branches:
+      - main
 
 jobs:
- redeploy:
-   runs-on: ubuntu-latest
-   steps: 
-    - run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
-        mkdir -p /home/runner/.ssh
-        touch /home/runner/.ssh/known_hosts
-        echo "previous step"
-        echo "${{ secrets.KNOWN_HOSTS }}" &> ~/.ssh/known_hosts
-        echo "next step"
-        ls -la ~/.ssh/
-        chmod 700 /home/runner/ssh_key
-        ssh -i ~/ssh_key root@3.110.114.166 -t "cd Turbo-Deployment/ && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add EC2 host to known hosts
+      run: ssh-keyscan -H {EC2 Public IP}>> ~/.ssh/known_hosts
+
+    - name: Deploy to EC2
+      run: |
+        ssh ubuntu@{EC2 Public IP} "cd Turbo-Deployment/ && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart ws-server && pm2 restart web"
